@@ -1,6 +1,6 @@
-const usersRouter = require("./user.router");
 const express = require("express");
 const mongoose = require("mongoose");
+const usersRouter = require("./user.router");
 
 const PORT = 3000;
 

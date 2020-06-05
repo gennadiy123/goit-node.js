@@ -1,10 +1,10 @@
 const { Router } = require("express");
 const Joi = require("@hapi/joi");
 const uuid = require("uuid");
-const contacts = require("./contacts");
 const mongoose = require("mongoose");
-const { Schema } = mongoose;
 Joi.objectId = require("joi-objectId")(Joi);
+const contacts = require("./contacts");
+const { Schema } = mongoose;
 
 const contactSchema = new Schema({
   name: { type: String, required: true },
