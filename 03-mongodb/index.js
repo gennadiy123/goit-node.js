@@ -1,12 +1,12 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const { MONGODB_URL } = require("./.env.json");
-const contactSchema = require("./contact-mongoose");
 const contactRouter = require("./contact-route");
+
 const PORT = 3000;
 
 const server = express();
-const connect = mongoose
+mongoose
   .connect(MONGODB_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
@@ -22,12 +22,13 @@ const connect = mongoose
     }
   );
 
-const ContactModel = mongoose.model("Contact", contactSchema());
-
 server.use(express.json());
-server.use("/", contactRouter(ContactModel));
+server.use("/", contactRouter);
 
 server.use((err, req, res, next) => {
   return res.status(err.status).send(err.message);
 });
 
+server.listen(PORT, () => {
+  console.log("Server started listening on port", PORT);
+});

@@ -1,49 +1,30 @@
 const { Router } = require("express");
+const ContactModel = require("./contact-mongoose");
 
-module.exports = (ContactModel) => {
-  const contactRouter = Router();
-  contactRouter.get("/contacts", function (req, res) {
-    ContactModel.find(function (err, ContactModel) {
-      if (err) return console.error(err);
-      res.status(200).json(ContactModel);
-    });
-  });
+const contactRouter = new Router();
+contactRouter.get("/contacts", async function (req, res) {
+  const list = await ContactModel.getAllContacts();
+  res.status(200).json(list);
+});
 
-  contactRouter.get("/contacts/:id", function (req, res) {
-    ContactModel.findById(req.params.id, function (err, contact) {
-      if (err) return console.error(err);
-      res.status(200).json(contact);
-    });
-  });
+contactRouter.get("/contacts/:id", async function (req, res) {
+  const contact = await ContactModel.getContact(req.params.id);
+  res.status(200).json(contact);
+});
 
-  contactRouter.put("/contacts/:id", function (req, res) {
-    ContactModel.findByIdAndUpdate(
-      req.params.id,
-      req.body,
-      { new: true },
-      function (err, contact) {
-        if (err) return console.error(err);
-        res.status(200).json(contact);
-      }
-    );
-  });
+contactRouter.put("/contacts/:id", async function (req, res) {
+  const contact = await ContactModel.updateContact(req.params.id, req.body);
+  res.status(200).json(contact);
+});
 
-  contactRouter.post("/contacts", function (req, res) {
-    ContactModel.create(
-      req.body,
-      function (err, contact) {
-        if (err) return console.error(err);
-        res.status(200).json(contact);
-      }
-    );
-  });
+contactRouter.post("/contacts", async function (req, res) {
+  const contact = await ContactModel.createContact(req.body);
+  res.status(200).json(contact);
+});
 
-  contactRouter.delete("/contacts/:id", function (req, res) {
-    ContactModel.findByIdAndDelete(req.params.id, function (err, contact) {
-      if (err) return console.error(err);
-      res.status(200).json(contact);
-    });
-  });
+contactRouter.delete("/contacts/:id", async function (req, res) {
+  const contact = await ContactModel.removeContact(req.params.id);
+  res.status(200).json(contact);
+});
 
-  return contactRouter;
-};
+module.exports = contactRouter;
