@@ -19,22 +19,22 @@ const ContactModel = mongoose.model("Contact", contactSchema);
 
 module.exports = ContactModel;
 
- function getAllContacts() {
+function getAllContacts() {
   return this.find();
 }
 
-async function getContact(id) {
+function getContact(id) {
   return this.findById(id);
 }
 
-async function updateContact(id, params) {
+function updateContact(id, params) {
   return this.findByIdAndUpdate(id, params, { new: true });
 }
 
-async function createContact(params) {
+function createContact(params) {
   return this.create(params);
 }
 
-async function removeContact(id) {
+function removeContact(id) {
   return this.findByIdAndDelete(id);
 }
