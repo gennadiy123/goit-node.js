@@ -4,8 +4,8 @@
 ## Get latest from https://github.com/github/gitignore/blob/master/VisualStudio.gitignore
 
 # dotenv environment variables file
-.env.json
-.env.json.test
+.env
+
 
 # User-specific files
 *.rsuser
